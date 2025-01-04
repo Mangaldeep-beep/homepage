@@ -1,0 +1,5 @@
+cd C:\Users\dell\AndroidStudioProjects\homepage
+./gradlew --stop
+./gradlew clean build --no-daemon 
+cd C:\Users\dell
+Remove-Item -Path ".gradle" -Recurse -Force 
