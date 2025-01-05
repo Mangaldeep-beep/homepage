@@ -1,9 +1,11 @@
 package com.example.homepage.ui.components
 
 import androidx.compose.animation.core.*
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.PlayArrow
@@ -13,11 +15,50 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.scale
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.homepage.R
+
+@Composable
+private fun PreviewImage(
+    modifier: Modifier = Modifier
+) {
+    Image(
+        painter = painterResource(id = R.drawable.book_placeholder),
+        contentDescription = "Preview",
+        modifier = modifier
+            .width(60.dp)
+            .height(100.dp)
+            .clip(RoundedCornerShape(8.dp))
+            .alpha(0.6f),
+        contentScale = ContentScale.Crop
+    )
+}
+
+@Composable
+private fun RatingPill(
+    text: String,
+    modifier: Modifier = Modifier
+) {
+    Surface(
+        color = Color.Red.copy(alpha = 0.3f),
+        shape = RoundedCornerShape(16.dp),
+        modifier = modifier
+    ) {
+        Text(
+            text = text,
+            modifier = Modifier.padding(horizontal = 12.dp, vertical = 4.dp),
+            color = Color.White,
+            fontSize = 12.sp
+        )
+    }
+}
 
 @Composable
 fun FeaturedPresentation(
@@ -25,7 +66,7 @@ fun FeaturedPresentation(
     onPlayClick: () -> Unit = {}
 ) {
     var isHovered by remember { mutableStateOf(false) }
-    
+
     val scale by animateFloatAsState(
         targetValue = if (isHovered) 1.02f else 1f,
         animationSpec = spring(
@@ -37,85 +78,98 @@ fun FeaturedPresentation(
 
     Box(
         modifier = modifier
-            .padding(16.dp)
             .fillMaxWidth()
-            .height(200.dp)
+            .height(250.dp)
             .clip(RoundedCornerShape(16.dp))
             .scale(scale)
-            .clickable {
-                isHovered = !isHovered
-                onPlayClick()
-            }
+            .clickable { isHovered = !isHovered }
     ) {
-        // Gradient background
+        // Main Image
+        Image(
+            painter = painterResource(id = R.drawable.book_placeholder),
+            contentDescription = "Featured Movie",
+            modifier = Modifier.fillMaxSize(),
+            contentScale = ContentScale.Crop
+        )
+
+        // Gradient Overlay
         Box(
             modifier = Modifier
                 .fillMaxSize()
                 .background(
-                    brush = Brush.linearGradient(
+                    brush = Brush.verticalGradient(
                         colors = listOf(
-                            MaterialTheme.colorScheme.primary.copy(alpha = 0.7f),
-                            MaterialTheme.colorScheme.secondary.copy(alpha = 0.7f)
+                            Color.Transparent,
+                            Color.Black.copy(alpha = 0.7f)
                         )
                     )
                 )
         )
 
+        // Side Preview Images
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 8.dp),
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            PreviewImage()
+            PreviewImage()
+        }
+
         // Content
         Column(
             modifier = Modifier
-                .fillMaxSize()
-                .padding(24.dp),
-            verticalArrangement = Arrangement.SpaceBetween
+                .align(Alignment.BottomStart)
+                .padding(16.dp)
         ) {
-            // Title and subtitle
-            Column {
-                Text(
-                    text = "Featured Audiobook",
-                    style = MaterialTheme.typography.titleSmall,
-                    color = Color.White.copy(alpha = 0.8f)
-                )
-                Spacer(modifier = Modifier.height(8.dp))
-                Text(
-                    text = "The Midnight Library",
-                    style = MaterialTheme.typography.headlineMedium.copy(
-                        fontWeight = FontWeight.Bold,
-                        fontSize = 28.sp
-                    ),
-                    color = Color.White
-                )
-                Text(
-                    text = "By Matt Haig",
-                    style = MaterialTheme.typography.bodyLarge,
-                    color = Color.White.copy(alpha = 0.8f)
-                )
+            // Rating Pills
+            Row(
+                horizontalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                RatingPill(text = "4.5 ★")
+                RatingPill(text = "2023")
+                RatingPill(text = "Horror")
             }
 
-            // Play button
-            Button(
-                onClick = onPlayClick,
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = Color.White,
-                    contentColor = MaterialTheme.colorScheme.primary
+            Spacer(modifier = Modifier.height(8.dp))
+
+            // Title
+            Text(
+                text = "The Exorcism of",
+                style = MaterialTheme.typography.headlineMedium.copy(
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 24.sp
                 ),
-                shape = RoundedCornerShape(8.dp)
-            ) {
-                Row(
-                    horizontalArrangement = Arrangement.spacedBy(8.dp),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Icon(
-                        imageVector = Icons.Default.PlayArrow,
-                        contentDescription = "Play"
-                    )
-                    Text(
-                        text = "Listen Now",
-                        style = MaterialTheme.typography.labelLarge.copy(
-                            fontWeight = FontWeight.Bold
-                        )
-                    )
-                }
-            }
+                color = Color.White
+            )
+            Text(
+                text = "Anneliese Michel",
+                style = MaterialTheme.typography.headlineMedium.copy(
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 24.sp
+                ),
+                color = Color.White
+            )
+        }
+
+        // Play Button (Red Circle)
+        Box(
+            modifier = Modifier
+                .align(Alignment.BottomEnd)
+                .padding(16.dp)
+                .size(48.dp)
+                .clip(CircleShape)
+                .background(Color.Red)
+                .clickable(onClick = onPlayClick),
+            contentAlignment = Alignment.Center
+        ) {
+            Icon(
+                imageVector = Icons.Default.PlayArrow,
+                contentDescription = "Play",
+                tint = Color.White,
+                modifier = Modifier.size(24.dp)
+            )
         }
     }
-} 
+}
