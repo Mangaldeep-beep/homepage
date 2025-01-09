@@ -19,7 +19,7 @@ import com.example.homepage.ui.components.BookCard
 data class Book(
     val title: String,
     val author: String,
-    val imageRes: Int = 0 // Dummy resource ID since we're using generated placeholders
+    val onClick: () -> Unit = {}
 )
 
 val popularEBooks = listOf(
@@ -71,8 +71,7 @@ fun BookSection(
                 BookCard(
                     title = book.title,
                     author = book.author,
-                    imageRes = book.imageRes,
-                    onClick = { /* Handle book click */ }
+                    onClick = book.onClick
                 )
             }
         }
@@ -154,4 +153,4 @@ fun LibraryScreen() {
             books = popularEBooks + popularAudiobooks
         )
     }
-} 
+}

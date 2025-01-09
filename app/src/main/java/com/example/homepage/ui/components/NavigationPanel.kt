@@ -1,22 +1,15 @@
 package com.example.homepage.ui.components
 
-import androidx.compose.animation.core.Spring
-import androidx.compose.animation.core.animateFloatAsState
-import androidx.compose.animation.core.spring
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.LibraryBooks
-import androidx.compose.material.icons.filled.*
+import androidx.compose.material.icons.outlined.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.scale
-import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 
 @Composable
@@ -25,56 +18,51 @@ fun NavigationPanel(
     onNavigate: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    Surface(
+    Box(
         modifier = modifier
-            .shadow(
-                elevation = 8.dp,
-                shape = RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp)
-            )
-            .background(
-                color = MaterialTheme.colorScheme.surface.copy(alpha = 0.95f),
-                shape = RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp)
-            ),
-        color = Color.Transparent
+            .fillMaxWidth()
+            .background(Color.Black)
+            .padding(horizontal = 24.dp, vertical = 12.dp)
     ) {
         Row(
             modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceEvenly,
+            horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
             NavItem(
-                icon = Icons.Default.Home,
-                label = "Home",
+                icon = Icons.Outlined.Home,
                 isSelected = currentRoute == "home",
                 onClick = { onNavigate("home") }
             )
             
             NavItem(
-                icon = Icons.Default.TrendingUp,
-                label = "Trending",
+                icon = Icons.Outlined.TrendingUp,
                 isSelected = currentRoute == "trending",
                 onClick = { onNavigate("trending") }
             )
             
             NavItem(
-                icon = Icons.Default.Person,
-                label = "Profile",
-                isSelected = currentRoute == "profile",
-                onClick = { onNavigate("profile") }
-            )
-            
-            NavItem(
-                icon = Icons.Default.Search,
-                label = "Search",
+                icon = Icons.Outlined.Search,
                 isSelected = currentRoute == "search",
                 onClick = { onNavigate("search") }
             )
             
             NavItem(
-                icon = Icons.AutoMirrored.Filled.LibraryBooks,
-                label = "Library",
-                isSelected = currentRoute == "library",
-                onClick = { onNavigate("library") }
+                icon = Icons.Outlined.PlayCircle,
+                isSelected = currentRoute == "videos",
+                onClick = { onNavigate("videos") }
+            )
+            
+            NavItem(
+                icon = Icons.Outlined.Group,
+                isSelected = currentRoute == "community",
+                onClick = { onNavigate("community") }
+            )
+            
+            NavItem(
+                icon = Icons.Outlined.Notifications,
+                isSelected = currentRoute == "notification",
+                onClick = { onNavigate("notification") }
             )
         }
     }
@@ -83,48 +71,23 @@ fun NavigationPanel(
 @Composable
 private fun NavItem(
     icon: androidx.compose.ui.graphics.vector.ImageVector,
-    label: String,
     isSelected: Boolean,
     onClick: () -> Unit
 ) {
-    val scale by animateFloatAsState(
-        targetValue = if (isSelected) 1.1f else 1f,
-        animationSpec = spring(
-            dampingRatio = Spring.DampingRatioMediumBouncy,
-            stiffness = Spring.StiffnessLow
-        ),
-        label = "scale"
-    )
-    
     val color = if (isSelected) 
-        MaterialTheme.colorScheme.primary 
+        Color.White
     else 
-        MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f)
+        Color.Gray.copy(alpha = 0.6f)
 
-    Column(
-        horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = Modifier
-            .scale(scale)
-            .padding(vertical = 8.dp)
+    IconButton(
+        onClick = onClick,
+        modifier = Modifier.size(40.dp)
     ) {
-        IconButton(
-            onClick = onClick,
-            modifier = Modifier.size(48.dp)
-        ) {
-            Icon(
-                imageVector = icon,
-                contentDescription = label,
-                tint = color,
-                modifier = Modifier.size(28.dp)
-            )
-        }
-        
-        Text(
-            text = label,
-            style = MaterialTheme.typography.labelSmall.copy(
-                fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Normal
-            ),
-            color = color
+        Icon(
+            imageVector = icon,
+            contentDescription = null,
+            tint = color,
+            modifier = Modifier.size(24.dp)
         )
     }
-} 
+}

@@ -187,4 +187,4 @@ private data class BookData(
     val author: String,
     val imageRes: Int,
     val onClick: () -> Unit
-) 
+)

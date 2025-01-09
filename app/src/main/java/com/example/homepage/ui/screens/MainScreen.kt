@@ -5,37 +5,23 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.zIndex
-import com.example.homepage.ui.components.AnimatedBackground
 import com.example.homepage.ui.components.NavigationPanel
+import com.example.homepage.ui.components.TopBar
 import com.example.homepage.screens.*
 
 @Composable
 fun MainScreen() {
     var currentRoute by remember { mutableStateOf("home") }
+    var showMenu by remember { mutableStateOf(false) }
 
     Box(modifier = Modifier.fillMaxSize()) {
-        // Animated Background
-        AnimatedBackground()
-
-        // Main layout with content and bottom navigation
         Column(modifier = Modifier.fillMaxSize()) {
-            // Fixed top text
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .zIndex(1f)
-                    .padding(start = 16.dp, top = 16.dp)
-            ) {
-                Text(
-                    text = "tree pull",
-                    style = MaterialTheme.typography.titleMedium,
-                    fontWeight = FontWeight.Bold,
-                    modifier = Modifier.align(Alignment.CenterStart)
-                )
-            }
+            // Top Bar
+            TopBar(
+                onMenuClick = { showMenu = !showMenu },
+                onProfileClick = { currentRoute = "profile" },
+                showMenu = showMenu
+            )
 
             // Content Area
             Box(
@@ -44,36 +30,29 @@ fun MainScreen() {
                     .fillMaxWidth()
             ) {
                 when (currentRoute) {
-                    "home" -> HomeScreen()
-                    "trending" -> TrendingScreen()
-                    "profile" -> ProfileScreen()
+                    "home" -> HomeScreen(onNavigate = { currentRoute = it })
+                    "trending" -> TrendingScreen(onNavigate = { currentRoute = it })
                     "search" -> SearchScreen()
-                    "library" -> LibraryScreen()
+                    "videos" -> VideosScreen()
+                    "community" -> CommunityScreen()
+                    "notification" -> NotificationScreen()
+                    "profile" -> ProfileScreen(
+                        onNavigateToHome = { currentRoute = "home" },
+                        onNavigateToSettings = { currentRoute = "settings" }
+                    )
+                    "settings" -> SettingsScreen(
+                        onNavigateBack = { currentRoute = "profile" }
+                    )
                 }
             }
 
-            // Bottom Navigation Panel
-            NavigationPanel(
-                currentRoute = currentRoute,
-                onNavigate = { route -> currentRoute = route },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(80.dp)
-            )
+            // Bottom Navigation (hide when in profile or settings)
+            if (currentRoute != "profile" && currentRoute != "settings") {
+                NavigationPanel(
+                    currentRoute = currentRoute,
+                    onNavigate = { currentRoute = it }
+                )
+            }
         }
     }
 }
-
-@Composable
-private fun ProfileScreen() {
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(16.dp)
-    ) {
-        Text(
-            text = "Profile Screen",
-            style = MaterialTheme.typography.headlineMedium
-        )
-    }
-} 

@@ -13,9 +13,8 @@ import com.example.homepage.ui.components.*
 fun DownloadsScreen(
     onNavigate: (String) -> Unit = {}
 ) {
-    var currentRoute by remember { mutableStateOf("downloads") }
-    val scrollState = rememberScrollState()
     var selectedTab by remember { mutableStateOf("Audiobook") }
+    val scrollState = rememberScrollState()
 
     Box(modifier = Modifier.fillMaxSize()) {
         // Animated Background with lower z-index
@@ -29,10 +28,6 @@ fun DownloadsScreen(
                 .fillMaxSize()
                 .verticalScroll(scrollState)
         ) {
-            TopBar(
-                onSettingsClick = { /* Handle settings click */ }
-            )
-
             // Tab Section
             TabSection(
                 selectedTab = selectedTab,
@@ -105,12 +100,9 @@ fun DownloadsScreen(
         // Bottom navigation
         Box(modifier = Modifier.align(Alignment.BottomCenter)) {
             BottomBar(
-                currentRoute = currentRoute,
-                onNavigate = { route ->
-                    currentRoute = route
-                    onNavigate(route)
-                }
+                currentRoute = "downloads",
+                onNavigate = onNavigate
             )
         }
     }
-} 
+}
