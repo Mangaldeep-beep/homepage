@@ -12,7 +12,7 @@ import com.example.homepage.ui.components.*
 fun HomeScreen(
     onNavigate: (String) -> Unit = {}
 ) {
-    var selectedTab by remember { mutableStateOf("Home") }
+    var selectedTab by remember { mutableStateOf("Audiobooks") }
     val scrollState = rememberScrollState()
 
     Column(
@@ -20,7 +20,7 @@ fun HomeScreen(
             .fillMaxSize()
             .verticalScroll(scrollState)
     ) {
-        FeaturedPresentation(contentType = selectedTab.ifEmpty { "Home" })
+        FeaturedPresentation(contentType = selectedTab)
         
         // Tab Section
         TabSection(
@@ -29,70 +29,36 @@ fun HomeScreen(
         )
 
         when (selectedTab) {
-            "" -> {  
-                ContentSection(
-                    title = "Trending Now",
-                    items = listOf(
-                        ContentItem(
-                            title = "The Lord of the Rings",
-                            subtitle = "J.R.R. Tolkien",
-                            imageUrl = "lotr_cover"
-                        ),
-                        ContentItem(
-                            title = "Harry Potter",
-                            subtitle = "J.K. Rowling",
-                            imageUrl = "hp_cover"
-                        )
-                    )
-                )
-            }
-            "Home" -> {
-                ContentSection(
-                    title = "Trending Now",
-                    items = listOf(
-                        ContentItem(
-                            title = "The Lord of the Rings",
-                            subtitle = "J.R.R. Tolkien",
-                            imageUrl = "lotr_cover"
-                        ),
-                        ContentItem(
-                            title = "Harry Potter",
-                            subtitle = "J.K. Rowling",
-                            imageUrl = "hp_cover"
-                        )
-                    )
-                )
-            }
-            "Audiobook" -> {
+            "Audiobooks" -> {
                 ContentSection(
                     title = "Popular Audiobooks",
                     items = listOf(
                         ContentItem(
-                            title = "The Power of Now",
-                            subtitle = "Eckhart Tolle",
-                            imageUrl = "power_now"
+                            title = "The Lord of the Rings",
+                            subtitle = "J.R.R. Tolkien",
+                            imageUrl = "lotr_cover"
                         ),
                         ContentItem(
-                            title = "Atomic Habits",
-                            subtitle = "James Clear",
-                            imageUrl = "atomic_habits"
+                            title = "Harry Potter",
+                            subtitle = "J.K. Rowling",
+                            imageUrl = "hp_cover"
                         )
                     )
                 )
             }
-            "E-Book" -> {
+            "Ebooks" -> {
                 ContentSection(
-                    title = "Featured E-Books",
+                    title = "Featured Ebooks",
                     items = listOf(
                         ContentItem(
-                            title = "The Silent Patient",
-                            subtitle = "Alex Michaelides",
-                            imageUrl = "silent_patient"
+                            title = "Dune",
+                            subtitle = "Frank Herbert",
+                            imageUrl = "dune_cover"
                         ),
                         ContentItem(
-                            title = "Project Hail Mary",
-                            subtitle = "Andy Weir",
-                            imageUrl = "hail_mary"
+                            title = "1984",
+                            subtitle = "George Orwell",
+                            imageUrl = "1984_cover"
                         )
                     )
                 )
@@ -102,14 +68,14 @@ fun HomeScreen(
                     title = "Top Podcasts",
                     items = listOf(
                         ContentItem(
-                            title = "The Joe Rogan Experience",
-                            subtitle = "Joe Rogan",
-                            imageUrl = "jre_podcast"
+                            title = "Tech Talk Daily",
+                            subtitle = "Daily Tech News",
+                            imageUrl = "tech_talk_cover"
                         ),
                         ContentItem(
-                            title = "Crime Junkie",
-                            subtitle = "Ashley Flowers",
-                            imageUrl = "crime_junkie"
+                            title = "Science Hour",
+                            subtitle = "Latest in Science",
+                            imageUrl = "science_hour_cover"
                         )
                     )
                 )

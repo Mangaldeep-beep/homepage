@@ -49,37 +49,11 @@ data class FeaturedItem(
 @Composable
 fun FeaturedPresentation(
     modifier: Modifier = Modifier,
-    contentType: String = "Home"
+    contentType: String = "Audiobooks"
 ) {
     val items = remember(contentType) {
         when (contentType) {
-            "Home" -> listOf(
-                FeaturedItem(
-                    "The Exorcism of",
-                    "Anneliese Michel",
-                    "4.5 ★",
-                    "2023",
-                    "Horror",
-                    R.drawable.book_placeholder
-                ),
-                FeaturedItem(
-                    "Conspiracy of",
-                    "Bollywood",
-                    "4.2 ★",
-                    "2023",
-                    "Mystery",
-                    R.drawable.book_placeholder
-                ),
-                FeaturedItem(
-                    "The Haunted",
-                    "House",
-                    "4.7 ★",
-                    "2023",
-                    "Horror",
-                    R.drawable.book_placeholder
-                )
-            )
-            "Audiobook" -> listOf(
+            "Audiobooks" -> listOf(
                 FeaturedItem(
                     "The Power of Now",
                     "Eckhart Tolle",
@@ -105,7 +79,7 @@ fun FeaturedPresentation(
                     R.drawable.book_placeholder
                 )
             )
-            "E-Book" -> listOf(
+            "Ebooks" -> listOf(
                 FeaturedItem(
                     "The Silent Patient",
                     "Alex Michaelides",
@@ -149,15 +123,24 @@ fun FeaturedPresentation(
                     R.drawable.book_placeholder
                 ),
                 FeaturedItem(
-                    "Huberman Lab",
-                    "Dr. Andrew Huberman",
+                    "TED Radio Hour",
+                    "NPR",
                     "4.9 ★",
                     "2023",
-                    "Science",
+                    "Educational",
                     R.drawable.book_placeholder
                 )
             )
-            else -> emptyList()
+            else -> listOf(
+                FeaturedItem(
+                    "Featured Content",
+                    "Explore More",
+                    "4.5 ★",
+                    "2023",
+                    "Various",
+                    R.drawable.book_placeholder
+                )
+            )
         }
     }
 
@@ -207,7 +190,6 @@ fun FeaturedPresentation(
                         alpha = scaleFactor
                     }
             ) {
-                // Content inside FeaturedCard
                 Box(
                     modifier = Modifier.fillMaxSize()
                 ) {
@@ -218,13 +200,51 @@ fun FeaturedPresentation(
                             .fillMaxWidth()
                             .padding(bottom = 16.dp)
                     ) {
-                        // Content - Moved slightly up to avoid overlap
+                        Row(
+                            modifier = Modifier
+                                .align(Alignment.Center)
+                                .padding(bottom = 8.dp),
+                            horizontalArrangement = Arrangement.spacedBy(16.dp),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            // Add to Playlist Button
+                            IconButton(
+                                onClick = { /* Handle add to playlist */ },
+                                modifier = Modifier.size(40.dp)
+                            ) {
+                                Image(
+                                    painter = painterResource(id = R.drawable.ic_add_to_playlist),
+                                    contentDescription = "Add to Playlist",
+                                    modifier = Modifier.size(40.dp)
+                                )
+                            }
+
+                            // Play/Pause Button
+                            IconButton(
+                                onClick = { isAutoScrollEnabled = !isAutoScrollEnabled },
+                                modifier = Modifier
+                                    .size(56.dp)
+                                    .background(
+                                        color = if (isAutoScrollEnabled) Color.Red else Color.Green,
+                                        shape = CircleShape
+                                    )
+                            ) {
+                                Icon(
+                                    imageVector = if (isAutoScrollEnabled) Icons.Default.Pause else Icons.Default.PlayArrow,
+                                    contentDescription = if (isAutoScrollEnabled) "Pause" else "Play",
+                                    tint = Color.White,
+                                    modifier = Modifier.size(32.dp)
+                                )
+                            }
+                        }
+
+                        // Content and Rating Pills
                         Column(
                             modifier = Modifier
                                 .align(Alignment.BottomStart)
                                 .padding(start = 12.dp, bottom = 24.dp)
                         ) {
-                            // Rating Pills - Now in place of headings
+                            // Rating Pills
                             Row(
                                 horizontalArrangement = Arrangement.spacedBy(6.dp)
                             ) {
@@ -234,7 +254,7 @@ fun FeaturedPresentation(
                             }
                         }
 
-                        // Music Visualizer Effect - Kept in place
+                        // Music Visualizer Effect
                         Row(
                             modifier = Modifier
                                 .fillMaxWidth()
@@ -330,25 +350,6 @@ fun FeaturedPresentation(
                     modifier = Modifier.size(20.dp)
                 )
             }
-        }
-
-        // Play/Pause Button
-        IconButton(
-            onClick = { isAutoScrollEnabled = !isAutoScrollEnabled },
-            modifier = Modifier
-                .align(Alignment.BottomEnd)
-                .padding(end = 12.dp)
-                .offset(y = (-6).dp)
-                .size(30.dp)
-                .clip(CircleShape)
-                .background(Color.Red)
-        ) {
-            Icon(
-                imageVector = if (isAutoScrollEnabled) Icons.Default.Pause else Icons.Default.PlayArrow,
-                contentDescription = if (isAutoScrollEnabled) "Pause" else "Play",
-                tint = Color.White,
-                modifier = Modifier.size(16.dp)
-            )
         }
 
         // Bouncing Down Arrow with Beat Animation
