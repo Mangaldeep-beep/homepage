@@ -12,7 +12,7 @@ import com.example.homepage.ui.components.*
 fun HomeScreen(
     onNavigate: (String) -> Unit = {}
 ) {
-    var selectedTab by remember { mutableStateOf("Audiobook") }
+    var selectedTab by remember { mutableStateOf("Home") }
     val scrollState = rememberScrollState()
 
     Column(
@@ -20,7 +20,7 @@ fun HomeScreen(
             .fillMaxSize()
             .verticalScroll(scrollState)
     ) {
-        FeaturedPresentation()
+        FeaturedPresentation(contentType = selectedTab.ifEmpty { "Home" })
         
         // Tab Section
         TabSection(
@@ -29,35 +29,65 @@ fun HomeScreen(
         )
 
         when (selectedTab) {
-            "Audiobook" -> {
-                // Continue Reading Section
+            "" -> {  
                 ContentSection(
-                    title = "Continue Reading",
+                    title = "Trending Now",
                     items = listOf(
                         ContentItem(
                             title = "The Lord of the Rings",
-                            subtitle = "Chapter 5 - The Bridge of Khazad-dûm",
-                            imageUrl = "lotr_cover",
-                            progress = 0.45f
+                            subtitle = "J.R.R. Tolkien",
+                            imageUrl = "lotr_cover"
                         ),
                         ContentItem(
                             title = "Harry Potter",
-                            subtitle = "Chapter 3 - The Letters from No One",
-                            imageUrl = "hp_cover",
-                            progress = 0.25f
+                            subtitle = "J.K. Rowling",
+                            imageUrl = "hp_cover"
+                        )
+                    )
+                )
+            }
+            "Home" -> {
+                ContentSection(
+                    title = "Trending Now",
+                    items = listOf(
+                        ContentItem(
+                            title = "The Lord of the Rings",
+                            subtitle = "J.R.R. Tolkien",
+                            imageUrl = "lotr_cover"
+                        ),
+                        ContentItem(
+                            title = "Harry Potter",
+                            subtitle = "J.K. Rowling",
+                            imageUrl = "hp_cover"
+                        )
+                    )
+                )
+            }
+            "Audiobook" -> {
+                ContentSection(
+                    title = "Popular Audiobooks",
+                    items = listOf(
+                        ContentItem(
+                            title = "The Power of Now",
+                            subtitle = "Eckhart Tolle",
+                            imageUrl = "power_now"
+                        ),
+                        ContentItem(
+                            title = "Atomic Habits",
+                            subtitle = "James Clear",
+                            imageUrl = "atomic_habits"
                         )
                     )
                 )
             }
             "E-Book" -> {
-                // Popular E-Books Section
                 ContentSection(
-                    title = "Popular E-Books",
+                    title = "Featured E-Books",
                     items = listOf(
                         ContentItem(
-                            title = "The Midnight Library",
-                            subtitle = "Matt Haig",
-                            imageUrl = "midnight_library"
+                            title = "The Silent Patient",
+                            subtitle = "Alex Michaelides",
+                            imageUrl = "silent_patient"
                         ),
                         ContentItem(
                             title = "Project Hail Mary",
@@ -68,19 +98,18 @@ fun HomeScreen(
                 )
             }
             "Podcast" -> {
-                // Trending Podcasts Section
                 ContentSection(
-                    title = "Trending Podcasts",
+                    title = "Top Podcasts",
                     items = listOf(
                         ContentItem(
-                            title = "Serial",
-                            subtitle = "True Crime",
-                            imageUrl = "serial_podcast"
+                            title = "The Joe Rogan Experience",
+                            subtitle = "Joe Rogan",
+                            imageUrl = "jre_podcast"
                         ),
                         ContentItem(
-                            title = "This American Life",
-                            subtitle = "Documentary",
-                            imageUrl = "tal_podcast"
+                            title = "Crime Junkie",
+                            subtitle = "Ashley Flowers",
+                            imageUrl = "crime_junkie"
                         )
                     )
                 )

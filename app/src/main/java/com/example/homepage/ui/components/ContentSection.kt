@@ -13,7 +13,7 @@ fun ContentSection(
     modifier: Modifier = Modifier,
     title: String? = null
 ) {
-    Column(modifier = modifier) {
+    Column(modifier = modifier.padding(vertical = 8.dp)) {
         if (title != null) {
             SectionHeader(
                 title = title,
@@ -24,8 +24,9 @@ fun ContentSection(
         LazyRow(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 8.dp),
-            horizontalArrangement = Arrangement.spacedBy(8.dp)
+                .padding(horizontal = 16.dp),
+            horizontalArrangement = Arrangement.spacedBy(16.dp),
+            contentPadding = PaddingValues(horizontal = 8.dp)
         ) {
             items(items) { item ->
                 ContentItem(

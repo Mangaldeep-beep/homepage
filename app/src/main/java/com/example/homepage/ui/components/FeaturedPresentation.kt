@@ -48,35 +48,117 @@ data class FeaturedItem(
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun FeaturedPresentation(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    contentType: String = "Home"
 ) {
-    val items = remember {
-        listOf(
-            FeaturedItem(
-                "The Exorcism of",
-                "Anneliese Michel",
-                "4.5 ★",
-                "2023",
-                "Horror",
-                R.drawable.book_placeholder
-            ),
-            FeaturedItem(
-                "Conspiracy of",
-                "Bollywood",
-                "4.2 ★",
-                "2023",
-                "Mystery",
-                R.drawable.book_placeholder
-            ),
-            FeaturedItem(
-                "The Haunted",
-                "House",
-                "4.7 ★",
-                "2023",
-                "Horror",
-                R.drawable.book_placeholder
+    val items = remember(contentType) {
+        when (contentType) {
+            "Home" -> listOf(
+                FeaturedItem(
+                    "The Exorcism of",
+                    "Anneliese Michel",
+                    "4.5 ★",
+                    "2023",
+                    "Horror",
+                    R.drawable.book_placeholder
+                ),
+                FeaturedItem(
+                    "Conspiracy of",
+                    "Bollywood",
+                    "4.2 ★",
+                    "2023",
+                    "Mystery",
+                    R.drawable.book_placeholder
+                ),
+                FeaturedItem(
+                    "The Haunted",
+                    "House",
+                    "4.7 ★",
+                    "2023",
+                    "Horror",
+                    R.drawable.book_placeholder
+                )
             )
-        )
+            "Audiobook" -> listOf(
+                FeaturedItem(
+                    "The Power of Now",
+                    "Eckhart Tolle",
+                    "4.8 ★",
+                    "2023",
+                    "Self Help",
+                    R.drawable.book_placeholder
+                ),
+                FeaturedItem(
+                    "Atomic Habits",
+                    "James Clear",
+                    "4.9 ★",
+                    "2023",
+                    "Personal Development",
+                    R.drawable.book_placeholder
+                ),
+                FeaturedItem(
+                    "Think Like a Monk",
+                    "Jay Shetty",
+                    "4.6 ★",
+                    "2023",
+                    "Spirituality",
+                    R.drawable.book_placeholder
+                )
+            )
+            "E-Book" -> listOf(
+                FeaturedItem(
+                    "The Silent Patient",
+                    "Alex Michaelides",
+                    "4.7 ★",
+                    "2023",
+                    "Thriller",
+                    R.drawable.book_placeholder
+                ),
+                FeaturedItem(
+                    "The Psychology of Money",
+                    "Morgan Housel",
+                    "4.8 ★",
+                    "2023",
+                    "Finance",
+                    R.drawable.book_placeholder
+                ),
+                FeaturedItem(
+                    "Project Hail Mary",
+                    "Andy Weir",
+                    "4.9 ★",
+                    "2023",
+                    "Sci-Fi",
+                    R.drawable.book_placeholder
+                )
+            )
+            "Podcast" -> listOf(
+                FeaturedItem(
+                    "The Joe Rogan",
+                    "Experience",
+                    "4.8 ★",
+                    "2023",
+                    "Talk Show",
+                    R.drawable.book_placeholder
+                ),
+                FeaturedItem(
+                    "Crime Junkie",
+                    "True Crime Stories",
+                    "4.7 ★",
+                    "2023",
+                    "True Crime",
+                    R.drawable.book_placeholder
+                ),
+                FeaturedItem(
+                    "Huberman Lab",
+                    "Dr. Andrew Huberman",
+                    "4.9 ★",
+                    "2023",
+                    "Science",
+                    R.drawable.book_placeholder
+                )
+            )
+            else -> emptyList()
+        }
     }
 
     var isAutoScrollEnabled by remember { mutableStateOf(true) }

@@ -67,7 +67,13 @@ fun TabSection(
                         modifier = Modifier.scale(animatedScale)
                     ) {
                         TextButton(
-                            onClick = { onTabSelected(tab) },
+                            onClick = { 
+                                if (selected) {
+                                    onTabSelected("")  // Deselect if already selected
+                                } else {
+                                    onTabSelected(tab)
+                                }
+                            },
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .padding(vertical = 8.dp),
@@ -101,4 +107,4 @@ fun TabSection(
             }
         }
     }
-} 
+}

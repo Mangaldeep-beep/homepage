@@ -38,109 +38,125 @@ fun ContentItem(
     onClick: () -> Unit = {},
     onDownloadClick: () -> Unit = {}
 ) {
+    val squareSize = 160.dp
+    
     Column(
         modifier = Modifier
-            .width(160.dp)
+            .width(squareSize)
             .padding(8.dp)
             .clickable(onClick = onClick)
     ) {
         Box(
             modifier = Modifier
-                .fillMaxWidth()
-                .height(200.dp)
+                .size(squareSize)  // Make it square
                 .clip(RoundedCornerShape(12.dp))
                 .background(generateRandomGradient())
         ) {
-            // Placeholder image with random shapes
-            Canvas(modifier = Modifier.fillMaxSize()) {
-                repeat(5) {
-                    drawCircle(
-                        color = Color(
-                            Random.nextFloat(),
-                            Random.nextFloat(),
-                            Random.nextFloat(),
-                            0.5f
-                        ),
-                        radius = Random.nextFloat() * 100f,
-                        center = Offset(
-                            Random.nextFloat() * size.width,
-                            Random.nextFloat() * size.height
-                        )
+            // Trending badge
+            if (item.trending) {
+                Row(
+                    modifier = Modifier
+                        .padding(8.dp)
+                        .clip(RoundedCornerShape(4.dp))
+                        .background(MaterialTheme.colorScheme.surface.copy(alpha = 0.8f))
+                        .padding(4.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(4.dp)
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.TrendingUp,
+                        contentDescription = "Trending",
+                        modifier = Modifier.size(16.dp),
+                        tint = MaterialTheme.colorScheme.primary
+                    )
+                    Text(
+                        text = "Trending",
+                        style = MaterialTheme.typography.labelSmall,
+                        color = MaterialTheme.colorScheme.onSurface
                     )
                 }
             }
 
-            if (item.trending) {
-                Icon(
-                    imageVector = Icons.Default.TrendingUp,
-                    contentDescription = "Trending",
-                    tint = MaterialTheme.colorScheme.primary,
+            // Download count
+            item.downloads?.let {
+                Text(
+                    text = it,
                     modifier = Modifier
-                        .align(Alignment.TopEnd)
+                        .align(Alignment.BottomStart)
                         .padding(8.dp)
+                        .clip(RoundedCornerShape(4.dp))
+                        .background(MaterialTheme.colorScheme.surface.copy(alpha = 0.8f))
+                        .padding(4.dp),
+                    style = MaterialTheme.typography.labelSmall,
+                    color = MaterialTheme.colorScheme.onSurface
                 )
             }
 
-            if (item.progress > 0f) {
-                LinearProgressIndicator(
-                    progress = item.progress,
+            // Progress indicator
+            if (item.progress > 0) {
+                Canvas(
                     modifier = Modifier
-                        .align(Alignment.BottomCenter)
                         .fillMaxWidth()
-                        .height(4.dp),
-                    color = MaterialTheme.colorScheme.primary,
-                    trackColor = MaterialTheme.colorScheme.surface
-                )
-            }
-        }
-
-        Spacer(modifier = Modifier.height(8.dp))
-
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Column(modifier = Modifier.weight(1f)) {
-                Text(
-                    text = item.title,
-                    style = MaterialTheme.typography.titleMedium.copy(
-                        fontWeight = FontWeight.Bold
-                    ),
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis
-                )
-                Text(
-                    text = item.subtitle,
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f),
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis
-                )
+                        .height(2.dp)
+                        .align(Alignment.BottomCenter)
+                ) {
+                    val width = size.width
+                    val height = size.height
+                    
+                    // Background line
+                    drawLine(
+                        color = Color.White.copy(alpha = 0.3f),
+                        start = Offset(0f, height / 2),
+                        end = Offset(width, height / 2),
+                        strokeWidth = height,
+                        cap = StrokeCap.Round
+                    )
+                    
+                    // Progress line
+                    drawLine(
+                        color = Color.White,
+                        start = Offset(0f, height / 2),
+                        end = Offset(width * item.progress, height / 2),
+                        strokeWidth = height,
+                        cap = StrokeCap.Round
+                    )
+                }
             }
 
+            // Download button
             if (!item.isDownloaded) {
                 IconButton(
                     onClick = onDownloadClick,
-                    modifier = Modifier.size(32.dp)
+                    modifier = Modifier
+                        .align(Alignment.TopEnd)
+                        .padding(4.dp)
                 ) {
                     Icon(
                         imageVector = Icons.Default.Download,
                         contentDescription = "Download",
-                        tint = MaterialTheme.colorScheme.primary
+                        tint = Color.White
                     )
                 }
             }
         }
 
-        if (item.downloads != null) {
-            Text(
-                text = "${item.downloads} downloads",
-                style = MaterialTheme.typography.labelSmall,
-                color = MaterialTheme.colorScheme.primary,
-                modifier = Modifier.padding(top = 4.dp)
-            )
-        }
+        // Title and subtitle below the square image
+        Spacer(modifier = Modifier.height(8.dp))
+        Text(
+            text = item.title,
+            style = MaterialTheme.typography.titleSmall.copy(
+                fontWeight = FontWeight.Bold
+            ),
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis
+        )
+        Text(
+            text = item.subtitle,
+            style = MaterialTheme.typography.bodySmall,
+            color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f),
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis
+        )
     }
 }
 
@@ -151,4 +167,4 @@ private fun generateRandomGradient(): Color {
         blue = Random.nextFloat(),
         alpha = 0.2f
     )
-} 
+}
