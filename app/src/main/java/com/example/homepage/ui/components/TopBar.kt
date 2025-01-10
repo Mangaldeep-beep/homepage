@@ -82,11 +82,9 @@ fun TopBar(
         },
         title = {
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                Text(
-                    text = "TREE",
-                    style = MaterialTheme.typography.titleLarge,
-                    fontWeight = FontWeight.Bold,
-                    color = yellowColor
+                AnimatedHeader(
+                    isMenuOpen = showMenu,
+                    modifier = Modifier.padding(vertical = 8.dp)
                 )
             }
         },

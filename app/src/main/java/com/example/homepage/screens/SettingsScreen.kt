@@ -106,13 +106,35 @@ fun SettingsScreen(
             }
         }
 
-        // Settings Items
-        SettingItem("Notification", yellowColor)
-        SettingItem("Privacy", yellowColor)
-        SettingItem("Security", yellowColor)
-        SettingItem("Help", yellowColor)
-        SettingItem("Password", yellowColor)
-        SettingItem("Version", yellowColor)
+        Spacer(modifier = Modifier.height(16.dp))
+
+        // Profile Settings
+        Text(
+            text = "PROFILE SETTINGS",
+            color = yellowColor,
+            fontWeight = FontWeight.Bold,
+            modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
+        )
+        
+        SettingItem(text = "Edit Profile", textColor = yellowColor)
+        SettingItem(text = "Change Password", textColor = yellowColor)
+        SettingItem(text = "Privacy", textColor = yellowColor)
+        SettingItem(text = "Notifications", textColor = yellowColor)
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        // App Settings
+        Text(
+            text = "APP SETTINGS",
+            color = yellowColor,
+            fontWeight = FontWeight.Bold,
+            modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
+        )
+
+        SettingItem(text = "Language", textColor = yellowColor)
+        SettingItem(text = "Download Quality", textColor = yellowColor)
+        SettingItem(text = "Storage", textColor = yellowColor)
+        SettingItem(text = "Clear Cache", textColor = yellowColor)
     }
 }
 
