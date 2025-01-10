@@ -46,13 +46,13 @@ fun TrendingScreen(
                     title = "Lessons in Chemistry",
                     subtitle = "Bonnie Garmus",
                     imageUrl = "lessons_chemistry",
-                    downloads = "50K+"
+                    downloads = "100K+"
                 ),
                 ContentItem(
                     title = "The Seven Husbands",
                     subtitle = "Taylor Jenkins Reid",
                     imageUrl = "seven_husbands",
-                    downloads = "45K+"
+                    downloads = "72K+"
                 )
             )
         )
