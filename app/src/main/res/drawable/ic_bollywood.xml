@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="200dp"
+    android:height="300dp"
+    android:viewportWidth="200"
+    android:viewportHeight="300">
+    
+    <!-- Background gradient -->
+    <path
+        android:fillColor="#FF4D00"
+        android:pathData="M0,0h200v300h-200z"/>
+    
+    <!-- Film reel -->
+    <path
+        android:fillColor="#000000"
+        android:pathData="M100,150 a50,50 0 1,1 0,0.1"/>
+    
+    <!-- Film holes -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M90,120 a5,5 0 1,1 0,0.1
+                         M110,120 a5,5 0 1,1 0,0.1
+                         M90,180 a5,5 0 1,1 0,0.1
+                         M110,180 a5,5 0 1,1 0,0.1"/>
+    
+    <!-- Camera silhouette -->
+    <path
+        android:fillColor="#000000"
+        android:pathData="M70,220h60v40h-60z"/>
+    
+    <!-- Lens -->
+    <path
+        android:fillColor="#333333"
+        android:pathData="M90,230h20v20h-20z"/>
+</vector>

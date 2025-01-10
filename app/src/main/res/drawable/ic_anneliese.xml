@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="200dp"
+    android:height="300dp"
+    android:viewportWidth="200"
+    android:viewportHeight="300">
+    
+    <!-- Dark background -->
+    <path
+        android:fillColor="#1A0F0F"
+        android:pathData="M0,0h200v300h-200z"/>
+    
+    <!-- Cross -->
+    <path
+        android:fillColor="#4D0000"
+        android:pathData="M90,50h20v120h-20z
+                         M60,90h80v20h-80z"/>
+    
+    <!-- Candles -->
+    <path
+        android:fillColor="#FFD700"
+        android:pathData="M40,200h20v40h-20z
+                         M140,200h20v40h-20z"/>
+    
+    <!-- Flames -->
+    <path
+        android:fillColor="#FF4D00"
+        android:pathData="M45,190 L55,180 L65,190z
+                         M145,190 L155,180 L165,190z"/>
+</vector>

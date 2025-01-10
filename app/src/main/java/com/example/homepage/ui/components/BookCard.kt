@@ -6,6 +6,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.Image
+import coil.compose.AsyncImage
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.tooling.preview.Preview
@@ -17,6 +18,7 @@ import com.example.homepage.R
 fun BookCard(
     title: String,
     author: String,
+    imageUrl: String = "",
     imageRes: Int = R.drawable.book_placeholder,
     modifier: Modifier = Modifier,
     onClick: () -> Unit = {}
@@ -27,14 +29,27 @@ fun BookCard(
             .clickable(onClick = onClick)
     ) {
         Column {
-            Image(
-                painter = painterResource(id = imageRes),
-                contentDescription = "$title by $author",
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(120.dp),
-                contentScale = ContentScale.Crop
-            )
+            if (imageUrl.isNotEmpty()) {
+                AsyncImage(
+                    model = imageUrl,
+                    contentDescription = "$title by $author",
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(180.dp),
+                    contentScale = ContentScale.Crop,
+                    placeholder = painterResource(id = R.drawable.book_placeholder),
+                    error = painterResource(id = R.drawable.book_placeholder)
+                )
+            } else {
+                Image(
+                    painter = painterResource(id = imageRes),
+                    contentDescription = "$title by $author",
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(180.dp),
+                    contentScale = ContentScale.Crop
+                )
+            }
             Text(
                 text = title,
                 modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)

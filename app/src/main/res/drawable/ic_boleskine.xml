@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="200dp"
+    android:height="300dp"
+    android:viewportWidth="200"
+    android:viewportHeight="300">
+    
+    <!-- Night sky background -->
+    <path
+        android:fillColor="#0F2C4D"
+        android:pathData="M0,0h200v300h-200z"/>
+    
+    <!-- Moon -->
+    <path
+        android:fillColor="#E6E6E6"
+        android:pathData="M150,50 a25,25 0 1,1 0,0.1"/>
+    
+    <!-- Victorian mansion -->
+    <path
+        android:fillColor="#2B2B2B"
+        android:pathData="M40,100 L160,100 L160,250 L40,250z"/>
+    
+    <!-- Windows -->
+    <path
+        android:fillColor="#4D4D4D"
+        android:pathData="M60,120h20v30h-20z
+                         M120,120h20v30h-20z
+                         M60,170h20v30h-20z
+                         M120,170h20v30h-20z"/>
+    
+    <!-- Roof -->
+    <path
+        android:fillColor="#1A1A1A"
+        android:pathData="M30,100 L100,50 L170,100z"/>
+</vector>

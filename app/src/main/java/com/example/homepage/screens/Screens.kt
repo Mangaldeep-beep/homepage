@@ -19,6 +19,7 @@ import com.example.homepage.ui.components.BookCard
 data class Book(
     val title: String,
     val author: String,
+    val imageRes: Int = R.drawable.book_placeholder,
     val onClick: () -> Unit = {}
 )
 
@@ -31,11 +32,26 @@ val popularEBooks = listOf(
 )
 
 val popularAudiobooks = listOf(
-    Book("The Sandman", "Neil Gaiman"),
-    Book("Atomic Habits", "James Clear"),
-    Book("Project Hail Mary", "Andy Weir"),
-    Book("The Martian", "Andy Weir"),
-    Book("Ready Player One", "Ernest Cline")
+    Book(
+        "The Shadows of Whitechapel",
+        "Victoria Thompson",
+        R.drawable.ic_whitechapel
+    ),
+    Book(
+        "The Haunted Boleskine House",
+        "Lon Milo DuQuette",
+        R.drawable.ic_boleskine
+    ),
+    Book(
+        "Conspiracy of Bollywood",
+        "Stacey Halls",
+        R.drawable.ic_bollywood
+    ),
+    Book(
+        "The Exorcism of Anneliese Michel",
+        "Felicitas D. Goodman",
+        R.drawable.ic_anneliese
+    )
 )
 
 val popularPodcasts = listOf(
@@ -55,22 +71,16 @@ fun BookSection(
     Column(modifier = modifier) {
         Text(
             text = title,
-            style = MaterialTheme.typography.titleLarge.copy(
-                fontWeight = FontWeight.Bold,
-                fontSize = 24.sp
-            ),
-            color = MaterialTheme.colorScheme.onBackground,
-            modifier = Modifier.padding(16.dp)
+            fontSize = 20.sp,
+            fontWeight = FontWeight.Bold,
+            modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
         )
-        
-        LazyRow(
-            contentPadding = PaddingValues(horizontal = 8.dp),
-            horizontalArrangement = Arrangement.spacedBy(8.dp)
-        ) {
+        LazyRow {
             items(books) { book ->
                 BookCard(
                     title = book.title,
                     author = book.author,
+                    imageRes = book.imageRes,
                     onClick = book.onClick
                 )
             }
