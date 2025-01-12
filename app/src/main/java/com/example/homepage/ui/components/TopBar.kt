@@ -66,6 +66,7 @@ fun TopBar(
     var showAboutDialog by remember { mutableStateOf(false) }
     var showSuggestionsDialog by remember { mutableStateOf(false) }
     var showComingSoonDialog by remember { mutableStateOf(false) }
+    var showLatestUpdatesDialog by remember { mutableStateOf(false) }
     val yellowColor = Color(0xFFFFEB3B)
 
     CenterAlignedTopAppBar(
@@ -114,7 +115,8 @@ fun TopBar(
         MenuDrawer(
             onAboutUsClick = { showAboutDialog = true },
             onSuggestionsClick = { showSuggestionsDialog = true },
-            onComingSoonClick = { showComingSoonDialog = true }
+            onComingSoonClick = { showComingSoonDialog = true },
+            onLatestUpdatesClick = { showLatestUpdatesDialog = true }
         )
     }
 
@@ -135,13 +137,20 @@ fun TopBar(
             onDismiss = { showComingSoonDialog = false }
         )
     }
+
+    if (showLatestUpdatesDialog) {
+        LatestUpdatesDialog(
+            onDismiss = { showLatestUpdatesDialog = false }
+        )
+    }
 }
 
 @Composable
 private fun MenuDrawer(
     onAboutUsClick: () -> Unit = {},
     onSuggestionsClick: () -> Unit = {},
-    onComingSoonClick: () -> Unit = {}
+    onComingSoonClick: () -> Unit = {},
+    onLatestUpdatesClick: () -> Unit = {}
 ) {
     Box(
         modifier = Modifier
@@ -232,7 +241,11 @@ private fun MenuDrawer(
                 onClick = onSuggestionsClick
             )
             MenuButton("SHARE APP", showArrow = true)
-            MenuButton("LATEST UPDATES", showArrow = true)
+            MenuButton(
+                text = "LATEST UPDATES",
+                showArrow = true,
+                onClick = onLatestUpdatesClick
+            )
             MenuButton("EXPLORE OTHER APPS", showArrow = true)
             MenuButton(
                 text = "COMING SOON",
