@@ -63,6 +63,7 @@ fun TopBar(
     onProfileClick: () -> Unit = {},
     showMenu: Boolean = false
 ) {
+    var showAboutDialog by remember { mutableStateOf(false) }
     val yellowColor = Color(0xFFFFEB3B)
 
     CenterAlignedTopAppBar(
@@ -108,91 +109,111 @@ fun TopBar(
     )
 
     if (showMenu) {
-        MenuDrawer()
+        MenuDrawer(
+            onAboutUsClick = { showAboutDialog = true }
+        )
+    }
+
+    if (showAboutDialog) {
+        AboutUsDialog(
+            onDismiss = { showAboutDialog = false }
+        )
     }
 }
 
 @Composable
-private fun MenuDrawer() {
-    Column(
+private fun MenuDrawer(
+    onAboutUsClick: () -> Unit = {}
+) {
+    Box(
         modifier = Modifier
-            .fillMaxHeight()
-            .background(Color.Black)
-            .padding(16.dp)
+            .fillMaxSize()
+            .background(Color.Black.copy(alpha = 0.9f))
     ) {
-        // Tree Logo at the top
-        Box(
+        Column(
             modifier = Modifier
-                .fillMaxWidth()
+                .fillMaxHeight()
                 .background(Color.Black)
-                .padding(24.dp),
-            contentAlignment = Alignment.Center
+                .padding(16.dp)
         ) {
-            Image(
-                painter = painterResource(id = R.drawable.ic_tree_logo),
-                contentDescription = "Tree Logo",
+            // Tree Logo at the top
+            Box(
                 modifier = Modifier
-                    .size(180.dp)
-                    .padding(8.dp)
+                    .fillMaxWidth()
+                    .background(Color.Black)
+                    .padding(24.dp),
+                contentAlignment = Alignment.Center
+            ) {
+                Image(
+                    painter = painterResource(id = R.drawable.ic_tree_logo),
+                    contentDescription = "Tree Logo",
+                    modifier = Modifier
+                        .size(180.dp)
+                        .padding(8.dp)
+                )
+            }
+
+            // Welcome text
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 16.dp),
+                contentAlignment = Alignment.Center
+            ) {
+                RainbowText(text = "WELCOME CONNECT WITH US")
+            }
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            RainbowText("JOIN OUR COMMUNITY")
+
+            Row(
+                horizontalArrangement = Arrangement.SpaceEvenly,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 8.dp)
+            ) {
+                SocialIcon(R.drawable.ic_youtube, "YouTube")
+                SocialIcon(R.drawable.ic_instagram, "Instagram")
+                SocialIcon(R.drawable.ic_facebook, "Facebook")
+            }
+            Row(
+                horizontalArrangement = Arrangement.SpaceEvenly,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 8.dp)
+            ) {
+                SocialIcon(R.drawable.ic_telegram, "Telegram")
+                SocialIcon(R.drawable.ic_linkedin, "LinkedIn")
+                SocialIcon(R.drawable.ic_twitter, "X")
+            }
+            Row(
+                horizontalArrangement = Arrangement.SpaceEvenly,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 8.dp)
+            ) {
+                SocialIcon(R.drawable.ic_whatsapp, "WhatsApp")
+                SocialIcon(R.drawable.ic_tree_logo, "Our Website")
+            }
+
+            Divider(
+                modifier = Modifier.padding(vertical = 8.dp),
+                color = Color(0xFFFFEB3B).copy(alpha = 0.2f)
             )
+            
+            // Menu items in the order shown in the image
+            MenuButton(
+                text = "About Us",
+                showArrow = true,
+                onClick = onAboutUsClick
+            )
+            MenuButton("SHARE APP", showArrow = true)
+            MenuButton("YOUR SUGGESTIONS", showArrow = true)
+            MenuButton("LATEST UPDATES", showArrow = true)
+            MenuButton("EXPLORE OTHER APPS", showArrow = true)
+            MenuButton("COMING SOON", showArrow = true)
         }
-
-        // Welcome text
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(vertical = 16.dp),
-            contentAlignment = Alignment.Center
-        ) {
-            RainbowText(text = "WELCOME CONNECT WITH US")
-        }
-
-        Spacer(modifier = Modifier.height(16.dp))
-
-        RainbowText("JOIN OUR COMMUNITY")
-
-        Row(
-            horizontalArrangement = Arrangement.SpaceEvenly,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(vertical = 8.dp)
-        ) {
-            SocialIcon(R.drawable.ic_youtube, "YouTube")
-            SocialIcon(R.drawable.ic_instagram, "Instagram")
-            SocialIcon(R.drawable.ic_facebook, "Facebook")
-        }
-        Row(
-            horizontalArrangement = Arrangement.SpaceEvenly,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(vertical = 8.dp)
-        ) {
-            SocialIcon(R.drawable.ic_telegram, "Telegram")
-            SocialIcon(R.drawable.ic_linkedin, "LinkedIn")
-            SocialIcon(R.drawable.ic_twitter, "X")
-        }
-        Row(
-            horizontalArrangement = Arrangement.SpaceEvenly,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(vertical = 8.dp)
-        ) {
-            SocialIcon(R.drawable.ic_whatsapp, "WhatsApp")
-            SocialIcon(R.drawable.ic_tree_logo, "Our Website")
-        }
-
-        Divider(
-            modifier = Modifier.padding(vertical = 8.dp),
-            color = Color(0xFFFFEB3B).copy(alpha = 0.2f)
-        )
-        
-        // Menu items in the order shown in the image
-        MenuButton("About Us", showArrow = true)
-        MenuButton("SHARE APP", showArrow = true)
-        MenuButton("YOUR SUGGESTIONS", showArrow = true)
-        MenuButton("LATEST UPDATES", showArrow = true)
-        MenuButton("EXPLORE OTHER APPS", showArrow = true)
-        MenuButton("COMING SOON", showArrow = true)
     }
 }
 
@@ -211,12 +232,16 @@ fun SocialIcon(iconRes: Int, contentDescription: String) {
 }
 
 @Composable
-fun MenuButton(text: String, showArrow: Boolean = false) {
+fun MenuButton(
+    text: String,
+    showArrow: Boolean = false,
+    onClick: () -> Unit = {}
+) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
             .padding(vertical = 12.dp)
-            .clickable { /* Handle click */ },
+            .clickable { onClick() },
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ) {
