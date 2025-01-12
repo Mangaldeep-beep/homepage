@@ -64,6 +64,8 @@ fun TopBar(
     showMenu: Boolean = false
 ) {
     var showAboutDialog by remember { mutableStateOf(false) }
+    var showSuggestionsDialog by remember { mutableStateOf(false) }
+    var showComingSoonDialog by remember { mutableStateOf(false) }
     val yellowColor = Color(0xFFFFEB3B)
 
     CenterAlignedTopAppBar(
@@ -110,7 +112,9 @@ fun TopBar(
 
     if (showMenu) {
         MenuDrawer(
-            onAboutUsClick = { showAboutDialog = true }
+            onAboutUsClick = { showAboutDialog = true },
+            onSuggestionsClick = { showSuggestionsDialog = true },
+            onComingSoonClick = { showComingSoonDialog = true }
         )
     }
 
@@ -119,11 +123,25 @@ fun TopBar(
             onDismiss = { showAboutDialog = false }
         )
     }
+
+    if (showSuggestionsDialog) {
+        SuggestionsDialog(
+            onDismiss = { showSuggestionsDialog = false }
+        )
+    }
+
+    if (showComingSoonDialog) {
+        ComingSoonDialog(
+            onDismiss = { showComingSoonDialog = false }
+        )
+    }
 }
 
 @Composable
 private fun MenuDrawer(
-    onAboutUsClick: () -> Unit = {}
+    onAboutUsClick: () -> Unit = {},
+    onSuggestionsClick: () -> Unit = {},
+    onComingSoonClick: () -> Unit = {}
 ) {
     Box(
         modifier = Modifier
@@ -202,17 +220,25 @@ private fun MenuDrawer(
                 color = Color(0xFFFFEB3B).copy(alpha = 0.2f)
             )
             
-            // Menu items in the order shown in the image
+            // Menu items
             MenuButton(
                 text = "About Us",
                 showArrow = true,
                 onClick = onAboutUsClick
             )
+            MenuButton(
+                text = "Your Suggestions",
+                showArrow = true,
+                onClick = onSuggestionsClick
+            )
             MenuButton("SHARE APP", showArrow = true)
-            MenuButton("YOUR SUGGESTIONS", showArrow = true)
             MenuButton("LATEST UPDATES", showArrow = true)
             MenuButton("EXPLORE OTHER APPS", showArrow = true)
-            MenuButton("COMING SOON", showArrow = true)
+            MenuButton(
+                text = "COMING SOON",
+                showArrow = true,
+                onClick = onComingSoonClick
+            )
         }
     }
 }
