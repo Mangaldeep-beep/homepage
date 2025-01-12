@@ -67,6 +67,8 @@ fun TopBar(
     var showSuggestionsDialog by remember { mutableStateOf(false) }
     var showComingSoonDialog by remember { mutableStateOf(false) }
     var showLatestUpdatesDialog by remember { mutableStateOf(false) }
+    var showExploreAppsDialog by remember { mutableStateOf(false) }
+    var showShareAppDialog by remember { mutableStateOf(false) }
     val yellowColor = Color(0xFFFFEB3B)
 
     CenterAlignedTopAppBar(
@@ -116,7 +118,9 @@ fun TopBar(
             onAboutUsClick = { showAboutDialog = true },
             onSuggestionsClick = { showSuggestionsDialog = true },
             onComingSoonClick = { showComingSoonDialog = true },
-            onLatestUpdatesClick = { showLatestUpdatesDialog = true }
+            onLatestUpdatesClick = { showLatestUpdatesDialog = true },
+            onExploreAppsClick = { showExploreAppsDialog = true },
+            onShareAppClick = { showShareAppDialog = true }
         )
     }
 
@@ -143,6 +147,18 @@ fun TopBar(
             onDismiss = { showLatestUpdatesDialog = false }
         )
     }
+
+    if (showExploreAppsDialog) {
+        ExploreOtherAppsDialog(
+            onDismiss = { showExploreAppsDialog = false }
+        )
+    }
+
+    if (showShareAppDialog) {
+        ShareAppDialog(
+            onDismiss = { showShareAppDialog = false }
+        )
+    }
 }
 
 @Composable
@@ -150,7 +166,9 @@ private fun MenuDrawer(
     onAboutUsClick: () -> Unit = {},
     onSuggestionsClick: () -> Unit = {},
     onComingSoonClick: () -> Unit = {},
-    onLatestUpdatesClick: () -> Unit = {}
+    onLatestUpdatesClick: () -> Unit = {},
+    onExploreAppsClick: () -> Unit = {},
+    onShareAppClick: () -> Unit = {}
 ) {
     Box(
         modifier = Modifier
@@ -240,13 +258,21 @@ private fun MenuDrawer(
                 showArrow = true,
                 onClick = onSuggestionsClick
             )
-            MenuButton("SHARE APP", showArrow = true)
+            MenuButton(
+                text = "SHARE APP",
+                showArrow = true,
+                onClick = onShareAppClick
+            )
             MenuButton(
                 text = "LATEST UPDATES",
                 showArrow = true,
                 onClick = onLatestUpdatesClick
             )
-            MenuButton("EXPLORE OTHER APPS", showArrow = true)
+            MenuButton(
+                text = "EXPLORE OTHER APPS",
+                showArrow = true,
+                onClick = onExploreAppsClick
+            )
             MenuButton(
                 text = "COMING SOON",
                 showArrow = true,
