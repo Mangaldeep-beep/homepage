@@ -2,9 +2,12 @@ plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 =======
 >>>>>>> parent of ebb6c0a (Aryan)
+=======
+>>>>>>> parent of 071c262 (Merge remote-tracking branch 'origin/master')
 }
 
 android {

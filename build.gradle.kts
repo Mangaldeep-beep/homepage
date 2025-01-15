@@ -4,7 +4,10 @@ plugins {
     alias(libs.plugins.kotlin.android) apply false
     alias(libs.plugins.kotlin.compose) apply false
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 =======
 >>>>>>> parent of ebb6c0a (Aryan)
+=======
+>>>>>>> parent of 071c262 (Merge remote-tracking branch 'origin/master')
 }

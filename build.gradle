@@ -4,7 +4,10 @@ plugins {
     id 'com.android.library' version '8.2.2' apply false
     id 'org.jetbrains.kotlin.android' version '1.9.0' apply false
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 =======
 >>>>>>> parent of ebb6c0a (Aryan)
+=======
+>>>>>>> parent of 071c262 (Merge remote-tracking branch 'origin/master')
 } 
