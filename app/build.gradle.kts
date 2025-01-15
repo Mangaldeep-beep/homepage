@@ -2,13 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
-<<<<<<< HEAD
-<<<<<<< HEAD
 
-=======
->>>>>>> parent of ebb6c0a (Aryan)
-=======
->>>>>>> parent of 071c262 (Merge remote-tracking branch 'origin/master')
 }
 
 android {
@@ -77,4 +71,7 @@ dependencies {
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
+
+    //hello bro
+
 }
